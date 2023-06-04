@@ -1,7 +1,7 @@
 ### Test Case For Famobi
 
 1. Clone the repository
-2. run `npm i install` to install all dependencies
+2. run `npm install` to install all dependencies
 3. run `npx react-native start` to start the metro bundler for React Native
 4. run `npx react-native run-android` to start the emulator(or physical device via USB) and the application
 
