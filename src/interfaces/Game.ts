@@ -24,3 +24,9 @@ export type Category =
   | 'MMO'
   | 'SURVIVAL'
   | 'SOCIAL';
+
+export type SortBy =
+  | 'release-date'
+  | 'popularity'
+  | 'alphabetical'
+  | 'relevance';

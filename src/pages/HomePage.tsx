@@ -6,12 +6,18 @@ import {
   Button,
   Chip,
   RadioButton,
+  SegmentedButtons,
   Text,
   useTheme,
 } from 'react-native-paper';
 import useGames from '../hooks/useGames';
 import GameCard from '../components/GameCard';
-import {type Platform, type Game, type Category} from '../interfaces/Game';
+import {
+  type Platform,
+  type Game,
+  type Category,
+  type SortBy,
+} from '../interfaces/Game';
 import CategoryChip from '../components/CategoryChip';
 
 const ALL_CATEGORIES: Category[] = [
@@ -32,26 +38,15 @@ function HomePage(): JSX.Element {
   const [columns] = React.useState(2);
 
   const [platform, setPlatform] = React.useState<Platform>('ALL');
-
   const [categories, setCategories] =
     React.useState<Category[]>(ALL_CATEGORIES);
+  const [sortBy, setSortBy] = React.useState<SortBy>('popularity');
 
-  const {status, data, error, isFetching} = useGames();
+  const {status, data, error, isFetching} = useGames(sortBy);
+
+  console.log(error);
 
   const theme = useTheme();
-
-  if (isFetching) {
-    return (
-      <View
-        style={{
-          ...style.container,
-          backgroundColor: theme.colors.background,
-          justifyContent: 'center',
-        }}>
-        <ActivityIndicator />
-      </View>
-    );
-  }
 
   function toggleCategory(category: Category): void {
     const index = categories.findIndex(c => c === category);
@@ -153,7 +148,31 @@ function HomePage(): JSX.Element {
           })}
         </View>
 
-        {data !== undefined && (
+        <View style={style.sortByContainer}>
+          <SegmentedButtons
+            value={sortBy}
+            onValueChange={value => {
+              if (
+                value === 'release-date' ||
+                value === 'popularity' ||
+                value === 'alphabetical' ||
+                value === 'relevance'
+              ) {
+                setSortBy(value);
+              }
+            }}
+            buttons={[
+              {value: 'release-date', label: 'Release Date'},
+              {value: 'popularity', label: 'Popularity'},
+              {value: 'alphabetical', label: 'Alphabetical'},
+              {value: 'relevance', label: 'Relevance'},
+            ]}
+          />
+        </View>
+
+        {isFetching && <ActivityIndicator size={'large'} />}
+
+        {data !== undefined && !isFetching && (
           <FlatList
             key={columns}
             numColumns={columns}
@@ -196,6 +215,10 @@ const style = StyleSheet.create({
     rowGap: 10,
     paddingTop: '1%',
     paddingBottom: '4%',
+  },
+  sortByContainer: {
+    marginVertical: '2%',
+    marginBottom: '4%',
   },
   radio: {
     flexDirection: 'row',
