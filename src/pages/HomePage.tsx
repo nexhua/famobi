@@ -3,8 +3,6 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import {
   ActivityIndicator,
   Appbar,
-  Button,
-  Chip,
   RadioButton,
   SegmentedButtons,
   Text,
@@ -43,8 +41,6 @@ function HomePage(): JSX.Element {
   const [sortBy, setSortBy] = React.useState<SortBy>('popularity');
 
   const {status, data, error, isFetching} = useGames(sortBy);
-
-  console.log(error);
 
   const theme = useTheme();
 

@@ -11,3 +11,10 @@ If you received an error about there is no Metro Package Bundler running on 8081
 
 Check if the reverse tcp is setted by using `adb reverse tcp:8081 tcp:8081`
 You can always check which ports are reversed by using `adb reverse --list`
+
+Here is a sample view of the application:
+
+![Sample Output](./sample.png)
+
+Solution for extra problem is in "./extra_problem/solution.ts"
+The solution is printed in the App component to the console screen where Metro bundler is running

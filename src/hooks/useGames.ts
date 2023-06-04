@@ -8,6 +8,5 @@ const getGames = async (sortBy: SortBy): Promise<Game[]> => {
 };
 
 export default function useGames(sortBy: SortBy) {
-  console.log(sortBy);
   return useQuery(['games', sortBy], () => getGames(sortBy));
 }
